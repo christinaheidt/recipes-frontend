@@ -62,7 +62,7 @@ export interface IThemeWrapper {
 }
 
 const GlobalStyle = createGlobalStyle<IThemeWrapper>`
-  body {
+  html, body {
     background-color: ${(props) => props.theme.colors.background};
     color: ${(props) => props.theme.colors.color};
     font-size: ${(props) => props.theme.fontsizes.body};

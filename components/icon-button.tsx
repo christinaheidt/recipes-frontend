@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FunctionComponent } from "react";
+import { forwardRef } from "react";
 
 const MaterialIcon = styled.i`
   font-family: "Material Icons";
@@ -16,13 +16,17 @@ const MaterialIcon = styled.i`
 `;
 
 const StyledIconButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   border-radius: 100%;
   border: none;
   color: ${(props) => props.theme.colors.primary};
   background: transparent;
   padding: 0;
-  height: 3em;
-  width: 3em;
+  height: 3rem;
+  width: 3rem;
   text-align: center;
   transition: all 0.2s;
   &:hover,
@@ -32,14 +36,18 @@ const StyledIconButton = styled.button`
   }
 `;
 
-interface IconButtonProps {
-    icon: string;
-}
-
-export default function IconButton(props: IconButtonProps) {
+export default function IconButton(props: {icon: string}) {
   return (
     <StyledIconButton>
       <MaterialIcon>{props.icon}</MaterialIcon>
     </StyledIconButton>
   );
 }
+
+export const LinkIconButton = forwardRef<HTMLLinkElement, {icon: string, href: any, onClick: any}>((props, ref) => {
+  return (
+    <StyledIconButton as="a" href={props.href} onClick={props.onClick} ref={ref}>
+      <MaterialIcon>{props.icon}</MaterialIcon>
+    </StyledIconButton>
+  );
+});
