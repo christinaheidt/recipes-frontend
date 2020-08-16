@@ -3,7 +3,7 @@ import Link from "next/link";
 import Headerbar from "../components/Header/headerbar";
 import HeaderTitle from "../components/Header/header-title";
 import IconButton, { LinkIconButton } from "../components/icon-button";
-
+import TextField from "../components/text-field/text-field";
 
 export default function New() {
     return (
@@ -29,6 +29,7 @@ export default function New() {
             <HeaderTitle title="Name"/>
             <IconButton icon="add" />
           </Headerbar>
+          <TextField text="huhu" label="Name"/>
         </main>
       </>
     );

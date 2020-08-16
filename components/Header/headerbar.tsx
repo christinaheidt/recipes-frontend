@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { FunctionComponent } from "react";
 
 const StyledHeaderbar = styled.div`
   background-color: ${(props) => props.theme.colors.background};
@@ -12,7 +11,7 @@ const StyledHeaderbar = styled.div`
   justify-content: space-between;
 `;
 
-const Headerbar: FunctionComponent = (props) => {
+const Headerbar: React.FunctionComponent<{}> = (props) => {
   return <StyledHeaderbar>{props.children}</StyledHeaderbar>;
 }
 

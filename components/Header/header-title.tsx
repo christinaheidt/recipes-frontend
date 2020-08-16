@@ -6,6 +6,12 @@ const Title = styled.h1`
   margin: 0;
 `;
 
-export default function HeaderTitle(props: {title: string}) {
+type HeaderTitleProps = {
+  title: string;
+};
+
+const HeaderTitle: React.FunctionComponent<HeaderTitleProps> = (props) => {
   return <Title>{props.title}</Title>;
-}
+};
+
+export default HeaderTitle;

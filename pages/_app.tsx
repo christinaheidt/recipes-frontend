@@ -1,38 +1,44 @@
 import type { AppProps } from "next/app";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 
-export interface IColors {
-  primary: string;
-  primary10: string;
-  primary30: string;
-  background: string;
-  color: string;
-  color50: string;
+type Colors = {
+  primary: string,
+  primary10: string,
+  primary30: string,
+  background: string,
+  color: string,
+  color50: string
 }
 
-export interface IFontSizes {
-  body: string;
-  titleS: string;
-  titleM: string;
-  titleL: string;
-  titleXL: string;
+type FontSizes = {
+  body: string,
+  titleS: string,
+  titleM: string,
+  titleL: string,
+  titleXL: string
 }
 
-export interface ISpacing {
-  xs: string;
-  s: string;
-  m: string;
-  l: string;
-  xl: string;
+type Spacing = {
+  xs: string,
+  s: string,
+  m: string,
+  l: string,
+  xl: string
 }
 
-export interface ITheme {
-  colors: IColors;
-  fontsizes: IFontSizes;
-  spacing: ISpacing;
+
+type Borders = {
+  inputBorderWidth: string;
+} 
+
+type Theme = {
+  colors: Colors,
+  fontsizes: FontSizes,
+  spacing: Spacing,
+  borders: Borders
 }
 
-const theme: ITheme = {
+const theme: Theme = {
   colors: {
     primary: "#FFD600",
     primary10: "rgba(255, 214, 0, 0.1)",
@@ -55,13 +61,16 @@ const theme: ITheme = {
     l: "2rem",
     xl: "3rem",
   },
+  borders: {
+    inputBorderWidth: "0.125rem"
+  }
 };
 
-export interface IThemeWrapper {
-  theme: ITheme;
+type ThemeWrapper = {
+  theme: Theme;
 }
 
-const GlobalStyle = createGlobalStyle<IThemeWrapper>`
+const GlobalStyle = createGlobalStyle<ThemeWrapper>`
   html, body {
     background-color: ${(props) => props.theme.colors.background};
     color: ${(props) => props.theme.colors.color};
