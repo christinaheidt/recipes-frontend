@@ -1,6 +1,6 @@
 import Head from "next/head";
-import styled from "styled-components";
-import Searchbar from '../components/Searchbar';
+import Searchbar from "../components/searchbar";
+import Headerbar from "../components/headerbar";
 
 export default function Home() {
   return (
@@ -10,7 +10,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Searchbar/>
+        <Headerbar />
+        <Searchbar />
       </main>
     </>
   );
