@@ -4,6 +4,7 @@ import { ThemeProvider, createGlobalStyle } from "styled-components";
 export interface IColors {
   primary: string;
   primary10: string;
+  primary30: string;
   background: string;
   color: string;
   color50: string;
@@ -11,7 +12,10 @@ export interface IColors {
 
 export interface IFontSizes {
   body: string;
-  subtitle: string;
+  titleS: string;
+  titleM: string;
+  titleL: string;
+  titleXL: string;
 }
 
 export interface ISpacing {
@@ -32,20 +36,24 @@ const theme: ITheme = {
   colors: {
     primary: "#FFD600",
     primary10: "rgba(255, 214, 0, 0.1)",
+    primary30: "rgba(255, 214, 0, 0.3)",
     background: "#000000",
     color: "#FFFFFF",
-    color50: "rgba(255, 255, 255, 0.2);"
+    color50: "rgba(255, 255, 255, 0.2);",
   },
   fontsizes: {
     body: "1rem",
-    subtitle: "1.25",
+    titleS: "1.25rem",
+    titleM: "1.5rem",
+    titleL: "2rem",
+    titleXL: "2.5rem",
   },
   spacing: {
     xs: "0.5rem",
     s: "1rem",
     m: "1.5rem",
     l: "2rem",
-    xl: "rem",
+    xl: "3rem",
   },
 };
 
@@ -59,6 +67,7 @@ const GlobalStyle = createGlobalStyle<IThemeWrapper>`
     color: ${(props) => props.theme.colors.color};
     font-size: ${(props) => props.theme.fontsizes.body};
     margin: 0;
+    font-family: 'Open Sans', sans-serif;
   }
 `;
 
