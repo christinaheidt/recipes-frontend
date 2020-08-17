@@ -7,7 +7,8 @@ import Searchbar from "../components/searchbar";
 import styled from "styled-components";
 import { FunctionComponent } from "react";
 import { GetServerSideProps } from "next";
-import RecipeList from "../components/recipes/recipe-list";
+import RecipeList from "../recipes/recipe-list";
+import { Recipe, getRecipes } from "../recipes/recipe";
 
 const Title = styled.h1`
   font-size: inherit;
@@ -18,11 +19,11 @@ const Title = styled.h1`
   margin: 0;
 `;
 
-const Home: FunctionComponent<IndexProps> = (props: IndexProps) => {
-  const recipes = props.recipes.map(recipe => {
-    return {id: recipe.id, name: recipe.name}
-  })
+type IndexProps = {
+  recipes: Recipe[];
+}
 
+const Home: FunctionComponent<IndexProps> = (props) => {
   return (
     <>
       <Head>
@@ -47,32 +48,14 @@ const Home: FunctionComponent<IndexProps> = (props: IndexProps) => {
           </Link>
         </Headerbar>
         <Searchbar />
-        <RecipeList recipes={recipes}/>
+        <RecipeList recipes={props.recipes}/>
       </main>
     </>
   );
 }
-type Recipe = {
-  id: number;
-  name: string;
-  ingredients: string;
-  instructions: string;
-}
-
-
-type IndexProps = {
-  recipes: Recipe[];
-}
 
 export const getServerSideProps: GetServerSideProps<IndexProps> = async () => {
-  //TODO: Remove this hack
-  process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
-  let recipes: Recipe[] = [];
-  const result = await fetch('https://localhost:5001/api/recipes');
-  const data = await result.json();
-  data.forEach((item: Recipe) => {
-    recipes.push({id: item.id, name: item.name, ingredients: item.ingredients, instructions: item.instructions})
-  });
+  var recipes = await getRecipes()
   return { props: {recipes} };
 }
 
