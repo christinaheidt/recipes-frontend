@@ -32,10 +32,16 @@ const StyledInput = styled.input`
   transition: all 0.2s;
 `;
 
-export default function Searchbar() {
+type SearchbarProps = {
+  filter: string;
+  onFilterChange: (filter: string) => void;
+}
+
+const Searchbar: React.FunctionComponent<SearchbarProps> = (props) =>  {
   return (
     <Container>
-      <StyledInput placeholder="Search..." />
+      <StyledInput placeholder="Search..." value={props.filter} onChange={(e) => props.onFilterChange(e.target.value)} />
     </Container>
   );
 }
+export default Searchbar;

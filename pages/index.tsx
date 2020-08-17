@@ -9,6 +9,7 @@ import { FunctionComponent } from "react";
 import { GetServerSideProps } from "next";
 import RecipeList from "../recipes/recipe-list";
 import { Recipe, getRecipes } from "../recipes/recipe";
+import React from "react";
 
 const Title = styled.h1`
   font-size: inherit;
@@ -24,6 +25,7 @@ type IndexProps = {
 }
 
 const Home: FunctionComponent<IndexProps> = (props) => {
+  const [filter, onFilterChange] = React.useState("");
   return (
     <>
       <Head>
@@ -47,8 +49,8 @@ const Home: FunctionComponent<IndexProps> = (props) => {
             <LinkIconButton icon="add" />
           </Link>
         </Headerbar>
-        <Searchbar />
-        <RecipeList recipes={props.recipes}/>
+        <Searchbar filter={filter} onFilterChange={onFilterChange}/>
+        <RecipeList recipes={props.recipes.filter(recipe => recipe.name.toUpperCase().indexOf(filter.toUpperCase().trimStart().trimEnd()) >= 0)}/>
       </main>
     </>
   );
