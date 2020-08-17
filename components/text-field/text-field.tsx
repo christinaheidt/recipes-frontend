@@ -54,6 +54,7 @@ const TextField: React.FunctionComponent<TextFieldProps> = (props) => {
   return (
     <>
       {props.label ? <Label active={isFocused}>{props.label}</Label> : <></>}
+      
       <Input
         onFocus={() => toggleFocused(true)}
         onBlur={() => toggleFocused(false)}
