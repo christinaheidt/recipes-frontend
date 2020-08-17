@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Component, createRef, RefObject } from "react";
+import React from "react";
 
 type LabelProps = {
   active: boolean;
@@ -11,7 +11,10 @@ const Label = styled.label<LabelProps>`
   color: ${(props) =>
     props.active ? props.theme.colors.primary : props.theme.colors.color};
   padding-bottom: ${(props) => props.theme.spacing.xs};
-  padding-left: 1.125rem;
+  padding-left: calc(
+    ${(props) => props.theme.spacing.s} +
+      ${(props) => props.theme.borders.inputBorderWidth}
+  );
   transition: all 0.2s;
 `;
 
@@ -42,37 +45,21 @@ const Input = styled.input`
 
 type TextFieldProps = {
   text: string;
-  label: string;
+  label?: string;
+  multiline?: boolean;
 };
 
-type TextFieldState = {
-  isFocused: boolean;
+const TextField: React.FunctionComponent<TextFieldProps> = (props) => {
+  const [isFocused, toggleFocused] = React.useState(false);
+  return (
+    <>
+      {props.label ? <Label active={isFocused}>{props.label}</Label> : <></>}
+      <Input
+        onFocus={() => toggleFocused(true)}
+        onBlur={() => toggleFocused(false)}
+      />
+    </>
+  );
 };
-
-class TextField extends Component<TextFieldProps, TextFieldState> {
-  state: TextFieldState = {
-    isFocused: false,
-  };
-
-  onFocus = () => {
-    this.setState(() => ({
-      isFocused: true,
-    }));
-  };
-
-  onBlur = () => {
-    this.setState((state: TextFieldState) => ({
-      isFocused: false,
-    }));
-  };
-  render() {
-    return (
-      <>
-        <Label active={this.state.isFocused}>{this.props.label}</Label>
-        <Input onFocus={this.onFocus} onBlur={this.onBlur} />
-      </>
-    );
-  }
-}
 
 export default TextField;

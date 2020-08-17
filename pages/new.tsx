@@ -5,6 +5,12 @@ import HeaderTitle from "../components/Header/header-title";
 import IconButton, { LinkIconButton } from "../components/icon-button";
 import TextField from "../components/text-field/text-field";
 
+type NewState = {
+  name: string;
+  ingredients: string;
+  instructions: string[];
+}
+
 export default function New() {
     return (
       <>
@@ -24,12 +30,17 @@ export default function New() {
         <main>
           <Headerbar>
           <Link href="/" passHref>
-            <LinkIconButton icon="arrow_back" />
+            <LinkIconButton icon="clear" />
           </Link>
             <HeaderTitle title="Name"/>
-            <IconButton icon="add" />
+            <IconButton icon="check" />
           </Headerbar>
           <TextField text="huhu" label="Name"/>
+          <TextField text="huhu"/>
+          <label>Ingredients</label>
+          <textarea/>
+          <label>Instructions</label>
+          <textarea/>
         </main>
       </>
     );
