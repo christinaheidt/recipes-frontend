@@ -31,15 +31,6 @@ const Home: FunctionComponent<IndexProps> = (props) => {
       <Head>
         <title>Recipes</title>
         <link rel="icon" href="/favicon.ico" />
-        {/* TODO: Font import */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Pacifico&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet"
-        ></link>
       </Head>
       <main>
         <Headerbar>
@@ -57,7 +48,7 @@ const Home: FunctionComponent<IndexProps> = (props) => {
 }
 
 export const getServerSideProps: GetServerSideProps<IndexProps> = async () => {
-  var recipes = await getRecipes()
+  var recipes = await getRecipes();
   return { props: {recipes} };
 }
 

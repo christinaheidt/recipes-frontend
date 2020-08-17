@@ -29,7 +29,7 @@ type Spacing = {
 
 type Borders = {
   inputBorderWidth: string;
-} 
+}
 
 type Theme = {
   colors: Colors,

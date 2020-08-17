@@ -13,3 +13,9 @@ export const getRecipes = async () => {
     const response = await axios.get<Recipe[]>('https://localhost:5001/api/recipes');
     return response.data;
 }
+
+export const getRecipe = async(id: string) => {
+    process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
+    const response = await axios.get<Recipe>(`https://localhost:5001/api/recipes/${id}`);
+    return response.data;
+}
