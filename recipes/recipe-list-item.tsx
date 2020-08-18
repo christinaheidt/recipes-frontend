@@ -1,26 +1,14 @@
 import Link from "next/link";
 import { RecipeListItemProps } from "./recipe-list-props";
 import styled from "styled-components";
+import RecipeImage from "./recipe-image";
 
 const ImageContainer = styled.a`
   display: block;
   position: relative;
-  width: 100%;
   &:after {
   content: "";
   display: block;
-  padding-bottom: 75%;
-  }
-  & img {
-    position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;     
   }
 `;
 
@@ -40,7 +28,7 @@ const RecipeListItem: React.FunctionComponent<RecipeListItemProps> = (props) => 
     return (<li>
         <Link href="/recipes/[id]" as={`/recipes/${props.id}`}>
             <ImageContainer>
-                <img src="/recipe.png" alt="Recipe Image" />
+                <RecipeImage src="/recipe.png" alt="Recipe Image" />
                 <ImageTitle>{props.name}</ImageTitle>
             </ImageContainer>
         </Link>
