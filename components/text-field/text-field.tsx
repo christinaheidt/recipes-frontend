@@ -19,7 +19,7 @@ const Label = styled.label<LabelProps>`
 `;
 
 const Input = styled.input`
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: transparent;
     border-color: ${(props) => props.theme.colors.color};
   }
@@ -28,7 +28,11 @@ const Input = styled.input`
     background-color: ${(props) => props.theme.colors.primary10};
     border-color: ${(props) => props.theme.colors.primary};
   }
-  background-color: ${(props) => props.theme.colors.color50};
+  &:disabled {
+    background-color: ${(props) => props.theme.colors.color10};
+    color: ${(props) => props.theme.colors.color50};
+  }
+  background-color: ${(props) => props.theme.colors.color20};
   box-sizing: border-box;
   display: block;
   width: 100%;

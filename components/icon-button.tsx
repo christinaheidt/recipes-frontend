@@ -37,7 +37,7 @@ const StyledIconButton = styled.button`
     outline: none;
   }
   &:disabled {
-    color: ${(props) => props.theme.colors.color50};
+    color: ${(props) => props.theme.colors.color20};
     cursor: default;
   }
 `;

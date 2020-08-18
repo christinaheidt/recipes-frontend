@@ -7,6 +7,7 @@ import { Recipe, getRecipe, RECIPE_ENDPOINT } from "../../../recipes/recipe";
 import { useRouter } from 'next/router'
 import styled from "styled-components";
 import useSWR from "swr";
+import FadeIn from "react-fade-in";
 
 const Image = styled.img`
   object-fit: cover;
@@ -50,13 +51,14 @@ const RecipeDetail: React.FunctionComponent = () => {
                         <LinkIconButton icon="create" />
                     </Link> : <LinkIconButton icon="create" disabled />}
                 </Headerbar>
-                <Image src="/recipe.png" alt="Recipe Image"></Image>
-                <Container>
-                    <Heading>Ingredients</Heading>
-                    {data ? <Section>{data.ingredients}</Section> : <></>}
-                    <Heading>Instruction</Heading>
-                    {data ? <Section>{data.instructions}</Section> : <></>}
-                </Container>
+                {data ? <FadeIn>
+                    <Image src="/recipe.png" alt="Recipe Image"></Image>
+                    <Container>
+                        <Heading>Ingredients</Heading>
+                        <Section>{data.ingredients}</Section>
+                        <Heading>Instruction</Heading>
+                        <Section>{data.instructions}</Section>
+                    </Container></FadeIn> : <></>}
             </main>
         </>
     );

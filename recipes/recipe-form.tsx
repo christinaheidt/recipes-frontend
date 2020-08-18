@@ -11,10 +11,12 @@ const Container = styled.div`
 `
 
 type RecipeFormProps = {
+    id?: number;
     title: string;
     name: string;
     ingredients: string;
     instructions: string;
+    disabled?: boolean;
     onNameChange: (value: string) => void;
     onIngredientsChange: (value: string) => void;
     onInstructionsChange:  (value: string) => void;
@@ -25,17 +27,17 @@ const RecipeForm: React.FunctionComponent<RecipeFormProps> = (props) => {
     return (
         <form onSubmit={(e) => props.onSubmit(e)}>
             <Headerbar>
-                <Link href="/" passHref>
-                    <LinkIconButton icon="clear" />
+                <Link href={props.id ? '/recipes/[id]' : '/'} as={props.id ? `/recipes/${props.id}` : ''} passHref>
+                    <LinkIconButton icon="clear" disabled={props.disabled}/>
                 </Link>
                 <HeaderTitle title={props.title} />
-                <IconButton icon="check" type="submit" />
+                <IconButton icon="check" type="submit" disabled={props.disabled}/>
             </Headerbar>
             <Container>
                 <FadeIn>
-                    <TextField label="Name" value={props.name} onChange={(e) => props.onNameChange(e.target.value)} type="text" required />
-                    <TextArea label="Ingredients" value={props.ingredients} onChange={(e) => props.onIngredientsChange(e.target.value)} rows={12} />
-                    <TextArea label="Instructions" value={props.instructions} onChange={(e) => props.onInstructionsChange(e.target.value)} rows={12} />
+                    <TextField label="Name" value={props.name} onChange={(e) => props.onNameChange(e.target.value)} type="text" required disabled={props.disabled}/>
+                    <TextArea label="Ingredients" value={props.ingredients} onChange={(e) => props.onIngredientsChange(e.target.value)} rows={12} disabled={props.disabled}/>
+                    <TextArea label="Instructions" value={props.instructions} onChange={(e) => props.onInstructionsChange(e.target.value)} rows={12} disabled={props.disabled}/>
                 </FadeIn>
             </Container>
         </form>

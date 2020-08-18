@@ -2,28 +2,31 @@ import type { AppProps } from "next/app";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 
 type Colors = {
-  primary: string,
-  primary10: string,
-  primary30: string,
-  background: string,
-  color: string,
-  color50: string
+  primary: string;
+  primary10: string;
+  primary30: string;
+  background: string;
+  color: string;
+  color10: string;
+  color20: string;
+  color50: string;
+  color80: string;
 }
 
 type FontSizes = {
-  body: string,
-  titleS: string,
-  titleM: string,
-  titleL: string,
-  titleXL: string
+  body: string;
+  titleS: string;
+  titleM: string;
+  titleL: string;
+  titleXL: string;
 }
 
 type Spacing = {
-  xs: string,
-  s: string,
-  m: string,
-  l: string,
-  xl: string
+  xs: string;
+  s: string;
+  m: string;
+  l: string;
+  xl: string;
 }
 
 
@@ -45,7 +48,10 @@ const theme: Theme = {
     primary30: "rgba(255, 214, 0, 0.3)",
     background: "#000000",
     color: "#FFFFFF",
-    color50: "rgba(255, 255, 255, 0.2);",
+    color10: "rgba(255, 255, 255, 0.1);",
+    color20: "rgba(255, 255, 255, 0.2);",
+    color50: "rgba(255, 255, 255, 0.5);",
+    color80: "rgba(255, 255, 255, 0.8);",
   },
   fontsizes: {
     body: "1rem",
