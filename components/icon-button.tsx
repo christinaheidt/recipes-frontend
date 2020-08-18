@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { forwardRef } from "react";
+import { forwardRef, ComponentPropsWithRef } from "react";
+import Link from "next/link";
 
 const MaterialIcon = styled.i`
   font-family: "Material Icons";
@@ -36,6 +37,10 @@ const StyledIconButton = styled.button`
   }
 `;
 
+type LinkButtonProps = {
+  icon: string
+}
+
 export default function IconButton(props: {icon: string}) {
   return (
     <StyledIconButton>
@@ -44,7 +49,7 @@ export default function IconButton(props: {icon: string}) {
   );
 }
 
-export const LinkIconButton = forwardRef<HTMLLinkElement, {icon: string, href: any, onClick: any}>((props, ref) => {
+export const LinkIconButton = forwardRef<HTMLLinkElement, ComponentPropsWithRef<Link> & LinkButtonProps>((props, ref) => {
   return (
     <StyledIconButton as="a" href={props.href} onClick={props.onClick} ref={ref}>
       <MaterialIcon>{props.icon}</MaterialIcon>

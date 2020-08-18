@@ -64,8 +64,9 @@ const RecipeDetail: React.FunctionComponent<RecipeDetailProps> = (props) => {
 }
 
 export const getServerSideProps: GetServerSideProps<RecipeDetailProps> = async (context) => {
-    const { id } = context.query;
-    var recipe = await getRecipe(id);
+    const { rid } = context.query;
+    const recipeId = rid as string;
+    var recipe = await getRecipe(recipeId);
     return { props: { recipe: recipe } };
 }
 
