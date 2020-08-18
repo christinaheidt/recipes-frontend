@@ -23,8 +23,6 @@ const Title = styled.h1`
 `;
 
 const getRecipes = (url: string) => {
-  //TODO: Remove this
-  process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
   return axios.get<Recipe[]>(url).then(response => response.data);
 }
 

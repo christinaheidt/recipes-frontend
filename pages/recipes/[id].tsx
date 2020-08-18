@@ -38,7 +38,7 @@ const Heading = styled.h2`
 
 const RecipeDetail: React.FunctionComponent = () => {
     const router = useRouter();
-    const { data, error } = useSWR<Recipe>(`${RECIPE_ENDPOINT}/${router.query.id}`, getRecipe)
+    const { data } = useSWR<Recipe>(router.query.id ? `${RECIPE_ENDPOINT}/${router.query.id}` : null, getRecipe)
     return (
         <>
             <Head>
@@ -65,6 +65,7 @@ const RecipeDetail: React.FunctionComponent = () => {
         </>
     );
 }
+
 
 
 export default RecipeDetail;
