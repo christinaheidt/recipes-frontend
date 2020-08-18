@@ -9,6 +9,7 @@ import { FunctionComponent } from "react";
 import React from "react";
 import { createRecipe } from "../recipes/recipe";
 import { useRouter } from "next/dist/client/router";
+import FadeIn from "react-fade-in";
 
 
 const Container = styled.div`
@@ -22,8 +23,8 @@ const New: FunctionComponent = () => {
   const router = useRouter();
   const onSubmit = async (e: any) => {
     e.preventDefault();
-    const createdRecipe = await createRecipe({name: name, ingredients: ingredients, instructions: instructions});
-    router.push(`/recipes/${createdRecipe.id?.toString()}` );
+    const createdRecipe = await createRecipe({ name: name, ingredients: ingredients, instructions: instructions });
+    router.push(`/recipes/${createdRecipe.id?.toString()}`);
   }
   return (
     <>
@@ -40,9 +41,11 @@ const New: FunctionComponent = () => {
             <IconButton icon="check" type="submit" />
           </Headerbar>
           <Container>
-            <TextField label="Name" value={name} onChange={(e) => onNameChange(e.target.value)} type="text" required />
-            <TextArea label="Ingredients" value={ingredients} onChange={(e) => onIngredientsChange(e.target.value)} rows={12} />
-            <TextArea label="Instructions" value={instructions} onChange={(e) => onInstructionsChange(e.target.value)} rows={12} />
+            <FadeIn>
+              <TextField label="Name" value={name} onChange={(e) => onNameChange(e.target.value)} type="text" required />
+              <TextArea label="Ingredients" value={ingredients} onChange={(e) => onIngredientsChange(e.target.value)} rows={12} />
+              <TextArea label="Instructions" value={instructions} onChange={(e) => onInstructionsChange(e.target.value)} rows={12} />
+            </FadeIn>
           </Container>
         </form>
       </main>

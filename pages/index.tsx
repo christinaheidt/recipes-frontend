@@ -8,8 +8,10 @@ import styled from "styled-components";
 import { FunctionComponent } from "react";
 import { GetServerSideProps } from "next";
 import RecipeList from "../recipes/recipe-list";
-import { Recipe, getRecipes } from "../recipes/recipe";
+import { Recipe, RECIPE_ENDPOINT } from "../recipes/recipe";
 import React from "react";
+import useSWR from "swr";
+import axios from "axios";
 
 const Title = styled.h1`
   font-size: inherit;
@@ -20,12 +22,19 @@ const Title = styled.h1`
   margin: 0;
 `;
 
-type IndexProps = {
-  recipes: Recipe[];
+const getRecipes = (url: string) => {
+  //TODO: Remove this
+  process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
+  return axios.get<Recipe[]>(url).then(response => response.data);
 }
 
-const Home: FunctionComponent<IndexProps> = (props) => {
+const fetcher = (url: any) => fetch(url).then(r => r.json());
+
+const Home: FunctionComponent = () => {
   const [filter, onFilterChange] = React.useState("");
+  const { data, error } = useSWR<Recipe[]>(RECIPE_ENDPOINT, getRecipes)
+  if (error) return <div>Uh-oh!</div>;
+  if (!data) return <div>Loading...</div>;
   return (
     <>
       <Head>
@@ -40,16 +49,11 @@ const Home: FunctionComponent<IndexProps> = (props) => {
             <LinkIconButton icon="add" />
           </Link>
         </Headerbar>
-        <Searchbar filter={filter} onFilterChange={onFilterChange}/>
-        <RecipeList recipes={props.recipes.filter(recipe => recipe.name.toUpperCase().indexOf(filter.toUpperCase().trimStart().trimEnd()) >= 0)}/>
+        <Searchbar filter={filter} onFilterChange={onFilterChange} />
+        <RecipeList recipes={data.filter(recipe => recipe.name.toUpperCase().indexOf(filter.toUpperCase().trimStart().trimEnd()) >= 0)} />
       </main>
     </>
   );
-}
-
-export const getServerSideProps: GetServerSideProps<IndexProps> = async () => {
-  var recipes = await getRecipes();
-  return { props: {recipes} };
 }
 
 export default Home;

@@ -3,12 +3,13 @@ import Headerbar from "../../components/Header/headerbar";
 import { LinkIconButton } from "../../components/icon-button";
 import HeaderTitle from "../../components/Header/header-title";
 import Link from "next/link";
-import { Recipe, getRecipe } from "../../recipes/recipe";
-import { GetServerSideProps } from "next";
+import { Recipe, getRecipe, RECIPE_ENDPOINT } from "../../recipes/recipe";
+import { useRouter } from 'next/router'
 import styled from "styled-components";
+import useSWR from "swr";
 
 type RecipeDetailProps = {
-    recipe: Recipe;
+    recipeId: string;
 }
 
 const Image = styled.img`
@@ -35,41 +36,35 @@ const Heading = styled.h2`
     }
 `;
 
-const RecipeDetail: React.FunctionComponent<RecipeDetailProps> = (props) => {
+const RecipeDetail: React.FunctionComponent = () => {
+    const router = useRouter();
+    const { data, error } = useSWR<Recipe>(`${RECIPE_ENDPOINT}/${router.query.id}`, getRecipe)
     return (
         <>
             <Head>
-                <title>{props.recipe.name}</title>
+                <title>{data ? data.name : 'Recipe'}</title>
             </Head>
             <main>
                 <Headerbar>
                     <Link href="/" passHref>
                         <LinkIconButton icon="arrow_back" />
                     </Link>
-                    <HeaderTitle title={props.recipe.name} />
+                    {data ? <HeaderTitle title={data.name} /> : <></>}
                     <Link href="/new" passHref>
                         <LinkIconButton icon="create" />
                     </Link>
                 </Headerbar>
-                <Image  src="/recipe.png" alt="Recipe Image"></Image>
+                <Image src="/recipe.png" alt="Recipe Image"></Image>
                 <Container>
                     <Heading>Ingredients</Heading>
-                    <Section>{props.recipe.ingredients}</Section>
+                    {data ? <Section>{data.ingredients}</Section> : <></>}
                     <Heading>Instruction</Heading>
-                    <Section>{props.recipe.ingredients}</Section>
+                    {data ? <Section>{data.instructions}</Section> : <></>}
                 </Container>
             </main>
         </>
     );
 }
-
-export const getServerSideProps: GetServerSideProps<RecipeDetailProps> = async (context) => {
-    const { rid } = context.query;
-    const recipeId = rid as string;
-    var recipe = await getRecipe(recipeId);
-    return { props: { recipe: recipe } };
-}
-
 
 
 export default RecipeDetail;
