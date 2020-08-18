@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React from "react";
+import React, { forwardRef } from "react";
 
 type LabelProps = {
   active: boolean;
@@ -35,32 +35,55 @@ const Input = styled.input`
   border: ${(props) => props.theme.borders.inputBorderWidth} solid transparent;
   color: inherit;
   font-size: inherit;
-  border-radius: 2rem;
+  border-radius: 1.1875rem;
   padding-top: ${(props) => props.theme.spacing.xs};
   padding-bottom: ${(props) => props.theme.spacing.xs};
   padding-left: ${(props) => props.theme.spacing.s};
   padding-right: ${(props) => props.theme.spacing.s};
+  margin-bottom: ${props => props.theme.spacing.m};
   transition: all 0.2s;
+  resize: none;
 `;
 
 type TextFieldProps = {
-  text: string;
   label?: string;
-  multiline?: boolean;
 };
 
-const TextField: React.FunctionComponent<TextFieldProps> = (props) => {
+const TextField = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement> & TextFieldProps>((props, ref) => {
   const [isFocused, toggleFocused] = React.useState(false);
   return (
     <>
       {props.label ? <Label active={isFocused}>{props.label}</Label> : <></>}
-      
-      <Input
+      <Input ref={ref} value={props.value}
+        onChange={props.onChange}
+        disabled={props.disabled}
+        required={props.required}
+        type={props.type}
         onFocus={() => toggleFocused(true)}
         onBlur={() => toggleFocused(false)}
       />
     </>
   );
-};
+});
+
+export const TextArea = forwardRef<HTMLTextAreaElement, React.TextareaHTMLAttributes<HTMLTextAreaElement> & TextFieldProps>((props, ref) => {
+  const [isFocused, toggleFocused] = React.useState(false);
+  return (
+    <>
+      {props.label ? <Label active={isFocused}>{props.label}</Label> : <></>}
+      <Input as="textarea" ref={ref} value={props.value}
+        autoFocus={props.autoFocus}
+        cols={props.cols}
+        rows={props.rows}
+        placeholder={props.placeholder}
+        onChange={props.onChange}
+        disabled={props.disabled}
+        required={props.required}
+        onFocus={() => toggleFocused(true)}
+        onBlur={() => toggleFocused(false)}
+      />
+    </>
+  );
+});
 
 export default TextField;

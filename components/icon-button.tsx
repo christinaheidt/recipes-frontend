@@ -17,6 +17,7 @@ const MaterialIcon = styled.i`
 `;
 
 const StyledIconButton = styled.button`
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -30,10 +31,14 @@ const StyledIconButton = styled.button`
   width: 3rem;
   text-align: center;
   transition: all 0.2s;
-  &:hover,
+  &:hover:not(:disabled),
   &:focus {
     background-color: ${(props) => props.theme.colors.primary30};
     outline: none;
+  }
+  &:disabled {
+    color: ${(props) => props.theme.colors.color50};
+    cursor: default;
   }
 `;
 
@@ -41,13 +46,13 @@ type LinkButtonProps = {
   icon: string
 }
 
-export default function IconButton(props: {icon: string}) {
+export const IconButton = forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement> & LinkButtonProps>((props, ref) => {
   return (
-    <StyledIconButton>
+    <StyledIconButton type={props.type} disabled={props.disabled} ref={ref}>
       <MaterialIcon>{props.icon}</MaterialIcon>
     </StyledIconButton>
   );
-}
+});
 
 export const LinkIconButton = forwardRef<HTMLLinkElement, ComponentPropsWithRef<Link> & LinkButtonProps>((props, ref) => {
   return (
@@ -56,3 +61,5 @@ export const LinkIconButton = forwardRef<HTMLLinkElement, ComponentPropsWithRef<
     </StyledIconButton>
   );
 });
+
+export default IconButton;
