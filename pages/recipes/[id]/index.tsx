@@ -1,23 +1,19 @@
 import Head from "next/head";
-import Headerbar from "../../components/Header/headerbar";
-import { LinkIconButton } from "../../components/icon-button";
-import HeaderTitle from "../../components/Header/header-title";
+import Headerbar from "../../../components/Header/headerbar";
+import { LinkIconButton } from "../../../components/icon-button";
+import HeaderTitle from "../../../components/Header/header-title";
 import Link from "next/link";
-import { Recipe, getRecipe, RECIPE_ENDPOINT } from "../../recipes/recipe";
+import { Recipe, getRecipe, RECIPE_ENDPOINT } from "../../../recipes/recipe";
 import { useRouter } from 'next/router'
 import styled from "styled-components";
 import useSWR from "swr";
-
-type RecipeDetailProps = {
-    recipeId: string;
-}
 
 const Image = styled.img`
   object-fit: cover;
   object-position: center;
   width: 100%;
   height: 75%;
-`
+`;
 
 const Container = styled.div`
     padding: ${props => props.theme.spacing.m};
@@ -25,7 +21,7 @@ const Container = styled.div`
 
 const Section = styled.div`
 white-space: pre-line;
-`
+`;
 
 const Heading = styled.h2`
     font-size: ${props => props.theme.fontsizes.l};
@@ -50,9 +46,9 @@ const RecipeDetail: React.FunctionComponent = () => {
                         <LinkIconButton icon="arrow_back" />
                     </Link>
                     {data ? <HeaderTitle title={data.name} /> : <></>}
-                    <Link href="/new" passHref>
+                    {data ? <Link href="/recipes/[id]/edit" as={`/recipes/${data.id}/edit`} passHref>
                         <LinkIconButton icon="create" />
-                    </Link>
+                    </Link> : <LinkIconButton icon="create" disabled />}
                 </Headerbar>
                 <Image src="/recipe.png" alt="Recipe Image"></Image>
                 <Container>

@@ -1,20 +1,15 @@
+import axios from "axios";
 import Head from "next/head";
-import Link from "next/link";
-import Headerbar from "../components/Header/headerbar";
-import HeaderTitle from "../components/Header/header-title";
-import IconButton, { LinkIconButton } from "../components/icon-button";
-import TextField, { TextArea } from "../components/text-field/text-field";
-import styled from "styled-components";
 import { FunctionComponent } from "react";
 import React from "react";
-import { createRecipe } from "../recipes/recipe";
 import { useRouter } from "next/dist/client/router";
-import FadeIn from "react-fade-in";
+import RecipeForm from "../recipes/recipe-form";
+import { Recipe, RECIPE_ENDPOINT } from "../recipes/recipe";
 
-
-const Container = styled.div`
-  padding: ${props => props.theme.spacing.m}
-`
+const createRecipe = async(recipe: Recipe) => {
+  const response = await axios.post<Recipe>(RECIPE_ENDPOINT, recipe);
+  return response.data;
+}
 
 const New: FunctionComponent = () => {
   const [name, onNameChange] = React.useState("");
@@ -32,22 +27,11 @@ const New: FunctionComponent = () => {
         <title>New Recipe</title>
       </Head>
       <main>
-        <form onSubmit={(e) => onSubmit(e)}>
-          <Headerbar>
-            <Link href="/" passHref>
-              <LinkIconButton icon="clear" />
-            </Link>
-            <HeaderTitle title="New Recipe" />
-            <IconButton icon="check" type="submit" />
-          </Headerbar>
-          <Container>
-            <FadeIn>
-              <TextField label="Name" value={name} onChange={(e) => onNameChange(e.target.value)} type="text" required />
-              <TextArea label="Ingredients" value={ingredients} onChange={(e) => onIngredientsChange(e.target.value)} rows={12} />
-              <TextArea label="Instructions" value={instructions} onChange={(e) => onInstructionsChange(e.target.value)} rows={12} />
-            </FadeIn>
-          </Container>
-        </form>
+        <RecipeForm title="New Recipe" name={name} onNameChange={onNameChange}
+          ingredients={ingredients} onIngredientsChange={onIngredientsChange}
+          instructions={instructions} onInstructionsChange={onInstructionsChange}
+          onSubmit={onSubmit}
+        ></RecipeForm>
       </main>
     </>
   );
