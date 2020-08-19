@@ -5,6 +5,7 @@ export type Recipe = {
     name: string;
     ingredients: string;
     instructions: string;
+    imagepath: string;
 }
 
 export const RECIPE_ENDPOINT = 'https://localhost:5001/api/recipes';

@@ -11,6 +11,10 @@ const updateRecipe = async (recipe: Recipe) => {
     return response.data;
 }
 
+const uploadImage = async (formData: FormData) => {
+    return await axios.post<{ dbPath: string }>('https://localhost:5001/api/images', formData).then(response => `https://localhost:5001/${response.data.dbPath}`);
+}
+
 const EditRecipe: React.FunctionComponent = () => {
     const router = useRouter();
     const { data } = useSWR<Recipe>(router.query.id ? `${RECIPE_ENDPOINT}/${router.query.id}` : null, getRecipe, { refreshInterval: 0 });
@@ -26,6 +30,13 @@ const EditRecipe: React.FunctionComponent = () => {
     }
 
     const [isSubmitted, onSubmittedChanged] = useState(false);
+
+    const onFileChange = async (file: any) => {
+        const formData = new FormData();
+        formData.append('image', file);
+        const createdImagePath = await uploadImage(formData);
+        mutate(`${RECIPE_ENDPOINT}/${router.query.id}`, { ...data, imagepath: createdImagePath }, false);
+    }
 
     const onSubmit = async (e: any) => {
         e.preventDefault();
@@ -44,9 +55,11 @@ const EditRecipe: React.FunctionComponent = () => {
         </Head>
         <main>
             {data ? <RecipeForm title={data.name ? data.name : 'Edit Recipe'} id={data.id} name={data.name} onNameChange={mutateName}
+                imagepath={data.imagepath}
                 ingredients={data.ingredients} onIngredientsChange={mutateIngredients}
                 instructions={data.instructions} onInstructionsChange={mutateInstructions}
                 onSubmit={onSubmit}
+                onFileChange={onFileChange}
                 disabled={isSubmitted}
             ></RecipeForm> : <></>}
         </main>

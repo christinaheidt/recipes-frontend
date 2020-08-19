@@ -19,7 +19,7 @@ const Label = styled.label<LabelProps>`
 `;
 
 const Input = styled.input`
-  &:hover:not(:disabled) {
+  &:hover:not(:disabled):not(:focus) {
     background-color: transparent;
     border-color: ${(props) => props.theme.colors.color};
   }
@@ -62,6 +62,7 @@ const TextField = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInp
         onChange={props.onChange}
         disabled={props.disabled}
         required={props.required}
+        defaultValue={props.defaultValue}
         type={props.type}
         onFocus={() => toggleFocused(true)}
         onBlur={() => toggleFocused(false)}
@@ -83,6 +84,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, React.TextareaHTMLAttrib
         onChange={props.onChange}
         disabled={props.disabled}
         required={props.required}
+        defaultValue={props.defaultValue}
         onFocus={() => toggleFocused(true)}
         onBlur={() => toggleFocused(false)}
       />

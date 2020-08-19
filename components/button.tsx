@@ -15,4 +15,10 @@ const Button = styled.button`
     }
 `;
 
+export const TransparentButton = styled(Button)`
+  color: ${props => props.theme.colors.color};
+  backdrop-filter: blur(8px);
+  background-color: rgba(0,0,0,0.2);
+`;
+
 export default Button;

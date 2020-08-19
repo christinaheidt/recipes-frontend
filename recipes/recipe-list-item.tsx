@@ -1,17 +1,15 @@
 import Link from "next/link";
 import { RecipeListItemProps } from "./recipe-list-props";
 import styled from "styled-components";
-import RecipeImage from "./recipe-image";
+import { ImageContainer, ImageContainerImage } from "./recipe-image";
 
-const ImageContainer = styled.a`
-  display: block;
-  position: relative;
-  &:after {
-  content: "";
-  display: block;
-  }
-`;
+const UnstyledA = styled.a`
+&, &:hover, &:visited {
+  color: inherit;
+}
 
+`
+  ;
 const ImageTitle = styled.div`
   position: absolute;
   left: 0;
@@ -25,14 +23,16 @@ const ImageTitle = styled.div`
 `;
 
 const RecipeListItem: React.FunctionComponent<RecipeListItemProps> = (props) => {
-    return (<li>
-        <Link href="/recipes/[id]" as={`/recipes/${props.id}`}>
-            <ImageContainer>
-                <RecipeImage src="/recipe.png" alt="Recipe Image" />
-                <ImageTitle>{props.name}</ImageTitle>
-            </ImageContainer>
-        </Link>
-    </li>);
+  return (<li>
+    <Link href="/recipes/[id]" as={`/recipes/${props.id}`} passHref>
+      <UnstyledA>
+        <ImageContainer>
+          <ImageContainerImage src={props.imagepath ? props.imagepath : '/recipe-placeholder.png'} alt="Recipe Image" />
+          <ImageTitle>{props.name}</ImageTitle>
+        </ImageContainer>
+      </UnstyledA>
+    </Link>
+  </li>);
 }
 
 export default RecipeListItem;

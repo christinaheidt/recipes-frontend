@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import styled from "styled-components";
 import useSWR from "swr";
 import FadeIn from "react-fade-in";
-import RecipeImage from "../../../recipes/recipe-image";
+import { ImageContainer, ImageContainerImage } from "../../../recipes/recipe-image";
 
 const Container = styled.div`
     padding: ${props => props.theme.spacing.m};
@@ -46,7 +46,9 @@ const RecipeDetail: React.FunctionComponent = () => {
                     </Link> : <LinkIconButton icon="create" disabled />}
                 </Headerbar>
                 {data ? <FadeIn>
-                    <RecipeImage src="/recipe.png" alt="Recipe Image" />
+                    <ImageContainer>
+                        <ImageContainerImage src={data.imagepath ? data.imagepath : '/recipe-placeholder.png'} alt="Recipe Image" />
+                    </ImageContainer>
                     <Container>
                         <Heading>Ingredients</Heading>
                         <Section>{data.ingredients}</Section>
