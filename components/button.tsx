@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const Button = styled.button`
+    cursor: pointer;
     padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.s};
     background-color: ${props => props.theme.colors.primary};
     border-radius: 1.125rem;

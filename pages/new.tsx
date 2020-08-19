@@ -1,6 +1,6 @@
 import axios from "axios";
 import Head from "next/head";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import React from "react";
 import { useRouter } from "next/dist/client/router";
 import RecipeForm from "../recipes/recipe-form";
@@ -16,25 +16,21 @@ const uploadImage = async (formData: FormData) => {
 }
 
 const New: FunctionComponent = () => {
-  const [name, onNameChange] = React.useState("");
-  const [ingredients, onIngredientsChange] = React.useState("");
-  const [instructions, onInstructionsChange] = React.useState("");
-  const [imagepath, onImagePathChange] = React.useState("");
+  const [name, onNameChange] = useState("");
+  const [ingredients, onIngredientsChange] = useState("");
+  const [instructions, onInstructionsChange] = useState("");
+  const [imagepath, setImagePath] = useState("");
+  const [isSubmitted, changeSubmitted] = useState(false);
   const router = useRouter();
   const onSubmit = async (e: any) => {
     e.preventDefault();
+    changeSubmitted(true);
     const createdRecipe = await createRecipe({ name: name, ingredients: ingredients, instructions: instructions, imagepath: imagepath });
     if (createdRecipe.id) {
       router.push(`/recipes/${createdRecipe.id.toString()}`);
     }
   }
 
-  const onFileChange = async (file: any) => {
-    const formData = new FormData();
-    formData.append('image', file);
-    const createdImagePath = await uploadImage(formData);
-    onImagePathChange(createdImagePath)
-  }
   return (
     <>
       <Head>
@@ -43,11 +39,11 @@ const New: FunctionComponent = () => {
       <main>
         <RecipeForm title="New Recipe"
           name={name} onNameChange={onNameChange}
-          imagepath={imagepath}
           ingredients={ingredients} onIngredientsChange={onIngredientsChange}
           instructions={instructions} onInstructionsChange={onInstructionsChange}
           onSubmit={onSubmit}
-          onFileChange={onFileChange}
+          disabled={isSubmitted}
+          imagepath={imagepath} onImagepathChanged={setImagePath}
         ></RecipeForm>
       </main>
     </>

@@ -16,8 +16,9 @@ const uploadImage = async (formData: FormData) => {
 }
 
 const EditRecipe: React.FunctionComponent = () => {
+    const [isSubmitted, changeSubmitted] = useState(false);
     const router = useRouter();
-    const { data } = useSWR<Recipe>(router.query.id ? `${RECIPE_ENDPOINT}/${router.query.id}` : null, getRecipe, { refreshInterval: 0 });
+    const { data } = useSWR<Recipe>(router.query.id ? `${RECIPE_ENDPOINT}/${router.query.id}` : null, getRecipe);
 
     const mutateName = (newName: string) => {
         mutate(`${RECIPE_ENDPOINT}/${router.query.id}`, { ...data, name: newName }, false);
@@ -28,22 +29,16 @@ const EditRecipe: React.FunctionComponent = () => {
     const mutateInstructions = (newInstructions: string) => {
         mutate(`${RECIPE_ENDPOINT}/${router.query.id}`, { ...data, instruction: newInstructions }, false);
     }
-
-    const [isSubmitted, onSubmittedChanged] = useState(false);
-
-    const onFileChange = async (file: any) => {
-        const formData = new FormData();
-        formData.append('image', file);
-        const createdImagePath = await uploadImage(formData);
-        mutate(`${RECIPE_ENDPOINT}/${router.query.id}`, { ...data, imagepath: createdImagePath }, false);
-    }
+    const mutateImagepath  = (newImagepath: string) => {
+        mutate(`${RECIPE_ENDPOINT}/${router.query.id}`, { ...data, imagepath: newImagepath }, false);
+    };
 
     const onSubmit = async (e: any) => {
         e.preventDefault();
         if (!data) {
             return;
         }
-        onSubmittedChanged(true);
+        changeSubmitted(true);
         await updateRecipe(data);
         mutate('/api/user', { data })
         router.push(`/recipes/${data?.id}`);
@@ -59,7 +54,7 @@ const EditRecipe: React.FunctionComponent = () => {
                 ingredients={data.ingredients} onIngredientsChange={mutateIngredients}
                 instructions={data.instructions} onInstructionsChange={mutateInstructions}
                 onSubmit={onSubmit}
-                onFileChange={onFileChange}
+                onImagepathChanged={mutateImagepath}
                 disabled={isSubmitted}
             ></RecipeForm> : <></>}
         </main>
